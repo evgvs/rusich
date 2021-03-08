@@ -3,6 +3,7 @@ from markovchain.text import MarkovText, ReplyMode
 from random import randint
 from time import sleep
 import time
+import datetime
 import urllib.request
 import xml.etree.ElementTree as ET
 markov = MarkovText()
@@ -40,7 +41,20 @@ def localize_RU_to_EN(text):
 
     return text
     
-    
+def calculateDebt():
+    startYear=2020
+    startMonth=11
+    startDay=19
+    baseDebt=27248063291167
+    perSecondDebt=42635
+    today = time.mktime(datetime.datetime.today().timetuple())
+    togda = time.mktime(datetime.date(startYear, startMonth, startDay).timetuple())
+
+    secs = today - togda
+    curdeb=(secs*perSecondDebt)+baseDebt
+
+    return curdeb
+
 os.system("clear")
 
 print("УМНАЯ КОМАНДНАЯ ОБОЛОЧКА \"РУСИЧ\" АО \"В. Т. СОФТ\"")
@@ -71,8 +85,9 @@ while True:
 
     print(f"ТЕКУЩЕЕ МЕСТОПОЛОЖЕНИЕ: {ANSI_COLOR_YELLOW}" + localize_EN_to_RU(os.getcwd()) + 
     f"{ANSI_COLOR_RESET} | ОПЕРАТИВНОЙ ПАМЯТИ ИСПОЛЬЗОВАНО: " + str(psutil.virtual_memory().percent) + "%" + 
-    "\nГрошы братняга народа - " + tree[4][4].text + " Российских Рублей " + 
-    "| 兄弟人民的货币 - " + tree[16][4].text + " Российских Рублей" + 
+    "\nГрошы братняга народа: " + tree[4][4].text + " Российских Рублей " + 
+    "| 兄弟人民的货币: " + tree[16][4].text + " Российских Рублей" + 
+    f"\n{ANSI_COLOR_RED}ГОСДОЛГ США: " + str(calculateDebt()) + f"{ANSI_COLOR_RESET} долларов" 
     "\nРУСИЧ =>> ", end="")
     rplt = localize_RU_to_EN(input())
     
