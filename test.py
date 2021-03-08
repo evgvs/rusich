@@ -26,6 +26,7 @@ rusacok =["а","б","ц","д","е","ф","дж","х","и","й","к","л","м","н
 def localize_EN_to_RU(text):
     for i in range(len(pendos)):
         text = text.replace(pendos[i], rusacok[i])
+    text = text.replace("оо", "у")
     return text
 
 def localize_RU_to_EN(text):
@@ -90,7 +91,7 @@ while True:
     f"{ANSI_COLOR_RESET} | ОПЕРАТИВНОЙ ПАМЯТИ ИСПОЛЬЗОВАНО: " + str(psutil.virtual_memory().percent) + "%" + 
     "\nГрошы братняга народа: " + tree[4][4].text + " Российских Рублей " + 
     "| 兄弟人民的货币: " + tree[16][4].text + " Российских Рублей" + 
-    f"\n{ANSI_COLOR_BOLD}Госдолг США: " + str(calculateDebt()) + f" долларов{ANSI_COLOR_BOLD}" 
+    f"\nГосдолг США: " + str(calculateDebt()) + f" долларов" 
     "\nРУСИЧ =>> ", end="")
     rplt = localize_RU_to_EN(input())
     
