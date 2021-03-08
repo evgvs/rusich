@@ -10,7 +10,7 @@ markov = MarkovText()
 import os
 import psutil
 import subprocess
-version = '1.2.9'
+version = '1.4.8.7'
 
 ANSI_COLOR_RED      = "\x1b[31m"
 ANSI_COLOR_GREEN    = "\x1b[32m"
@@ -19,6 +19,8 @@ ANSI_COLOR_BLUE     = "\x1b[34m"
 ANSI_COLOR_MAGENTA  = "\x1b[35m"
 ANSI_COLOR_CYAN     = "\x1b[36m"
 ANSI_COLOR_RESET    = "\x1b[0m"
+ANSI_COLOR_UNDERLINE= "\x1b[4m"
+ANSI_COLOR_BOLD     = "\x1b[1m"
 pendos = ["a","b","c","d","e","f","g" ,"h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w" ,"x" ,"y","z","A","B","C","D","E","F" ,"G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W" ,"X" ,"Y","Z"]
 rusacok =["а","б","ц","д","е","ф","дж","х","и","й","к","л","м","н","о","п","к","р","с","т","ю","в","вь","кс","ы","з","А","Б","Ц","Д","Е","Ф","ДЖ","Х","И","Й","К","Л","М","Н","О","П","К","Р","С","Т","Ю","В","ВЬ","КС","Ы","З"]
 def localize_EN_to_RU(text):
@@ -87,7 +89,7 @@ while True:
     f"{ANSI_COLOR_RESET} | ОПЕРАТИВНОЙ ПАМЯТИ ИСПОЛЬЗОВАНО: " + str(psutil.virtual_memory().percent) + "%" + 
     "\nГрошы братняга народа: " + tree[4][4].text + " Российских Рублей " + 
     "| 兄弟人民的货币: " + tree[16][4].text + " Российских Рублей" + 
-    f"\n{ANSI_COLOR_RED}ГОСДОЛГ США: " + str(calculateDebt()) + f"{ANSI_COLOR_RESET} долларов" 
+    f"\n{ANSI_COLOR_BOLD}Госдолг США: " + str(calculateDebt()) + f" долларов{ANSI_COLOR_BOLD}" 
     "\nРУСИЧ =>> ", end="")
     rplt = localize_RU_to_EN(input())
     
