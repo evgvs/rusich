@@ -35,12 +35,13 @@ def localize_RU_to_EN(text):
     text = text.replace("ш", "csh")
     text = text.replace("щ", "tcsh")
     text = text.replace("ж", "g")
+    text = text.replace("Г", "gh")
 
     text = text.replace("Ч", "CH")
     text = text.replace("Ш", "CSH")
     text = text.replace("Щ", "TCSH")
     text = text.replace("Ж", "G")
-
+    text = text.replace("Г", "GH")
     return text
     
 def calculateDebt():
