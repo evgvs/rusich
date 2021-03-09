@@ -98,7 +98,7 @@ def parse(inputstr):
     inbr = False
     for letter in inputstr:
         if letter == " " and not inbr:
-            out.append(buf)
+            out.append(localize_RU_to_EN(buf))
             buf = ""
         elif letter == "'" and not inbr:
             inbr = True
@@ -108,7 +108,7 @@ def parse(inputstr):
             buf = ""
         else:
             buf = buf + letter
-    out.append(buf)
+    out.append(localize_RU_to_EN(buf))
     for elem in out:
         if elem == "":
             out.remove(elem)    
@@ -138,9 +138,7 @@ while True:
     "| 兄弟人民的货币: " + kit + " Российских Рублей" + 
     f"\nГосдолг США: " + str(calculateDebt()) + f" долларов" 
     "\nРУСИЧ =>> ", end="")
-    rplt = localize_RU_to_EN(input())
-    
-    #print("Примечание - переведенная строка: " + rplt)
+    rplt = input()
     argv = parse(rplt)
     if argv[0] == "cd":
         print(f"{ANSI_COLOR_RED}КОМАНДА ЦД - ПЛОД АМЕРИКАНСКОГО ИМПЕРИАЛИЗМА, ИСПОЛЬЗУЙТЕ КОМАНДУ \"стд\"{ANSI_COLOR_RESET}")
