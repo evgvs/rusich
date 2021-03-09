@@ -59,38 +59,61 @@ def calculateDebt():
 
     return curdeb
 
+
+
+
 os.system("clear")
 
 print("УМНАЯ КОМАНДНАЯ ОБОЛОЧКА \"РУСИЧ\" АО \"В. Т. СОФТ\"")
-sleep(randint(1,3)/2)
+sleep(randint(1,3)/2.5)
 print(f"Версия{ANSI_COLOR_GREEN} {version} {ANSI_COLOR_RESET}является крайней, спасибо за своевременную установку обновлений лицензионного программного обеспечения АО \"В. Т. СОФТ\" - официального партнера Фирмы \"1C\"")
-sleep(randint(1,3)/3)
+sleep(randint(1,3)/3.5)
 print("Начинаю инициализацию 1С:Предприятие 8 для оболочки коммандного интерпретатора \"РУСИЧ\"...")
-sleep(randint(4,9)/3)
+sleep(randint(4,9)/4.1)
 print(f"{ANSI_COLOR_GREEN}Успешно!{ANSI_COLOR_RESET}")
 print("Коммандный интерпретатор \"РУСИЧ\" в ипостаси \"РАБОЧАЯ ЭЛЕКТРОННО-ВЫЧИСЛИТЕЛЬНАЯ СТАНЦИЯ\" не поддерживает некоторые возможности. В случае появления затруднений в его работе, обратитесь к системному администратору предприятия.")
 print(f"РЕЖИМ ЛОКАЛИЗАЦИИ [{ANSI_COLOR_GREEN}ВКЛЮЧЕНО{ANSI_COLOR_RESET}]")
 
 print("Напечатайте ИНТЕРАКТИВНЫЙ-СПРАВОЧНИК дабы перейти в режим получения справочной информации про команды ЖНЮ/Линюкс")
-
+print("Получаю актуальную информацию о курсах валют...")
 with open('content') as fp:
     markov.data(fp.read())
 
-contents = urllib.request.urlopen("http://www.cbr.ru/scripts/XML_daily.asp?").read()
-tree = ET.fromstring(contents)
 date_CBR = time.time()
+byn="0"
+kit="0"
+try:
+    contents = urllib.request.urlopen("http://www.cbr.ru/scripts/XML_daily.asp?", timeout=6).read()
+    tree = ET.fromstring(contents)
+    byn=tree[4][4].text
+    kit=tree[16][4].text
+except:
+    byn="0"
+    kit="0"
+
+def fetchval(date_CBR):
+    try:
+        contents = urllib.request.urlopen("http://www.cbr.ru/scripts/XML_daily.asp?", timeout=6).read()
+        tree = ET.fromstring(contents)
+        byn=tree[4][4].text
+        kit=tree[16][4].text
+    except:
+        byn="0"
+        kit="0"
+
+        date_CBR = time.time()
+    else:
+        date_CBR = time.time()
+
 
 markov.save('markov.json')
 while True:
-    if time.time() - date_CBR > 1000:
-        contents = urllib.request.urlopen("http://www.cbr.ru/scripts/XML_daily.asp?").read()
-        tree = ET.fromstring(contents)
-        date_CBR = time.time()
+    fetchval(date_CBR)
 
     print(f"ТЕКУЩЕЕ МЕСТОПОЛОЖЕНИЕ: {ANSI_COLOR_YELLOW}" + localize_EN_to_RU(os.getcwd()) + 
     f"{ANSI_COLOR_RESET} | ОПЕРАТИВНОЙ ПАМЯТИ ИСПОЛЬЗОВАНО: " + str(psutil.virtual_memory().percent) + "%" + 
-    "\nГрошы братняга народа: " + tree[4][4].text + " Российских Рублей " + 
-    "| 兄弟人民的货币: " + tree[16][4].text + " Российских Рублей" + 
+    "\nГрошы братняга народа: " + byn + " Российских Рублей " + 
+    "| 兄弟人民的货币: " + kit + " Российских Рублей" + 
     f"\nГосдолг США: " + str(calculateDebt()) + f" долларов" 
     "\nРУСИЧ =>> ", end="")
     rplt = localize_RU_to_EN(input())
