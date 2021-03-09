@@ -66,7 +66,7 @@ def calculateDebt():
 
 
 
-#os.system("clear")
+os.system("clear")
 
 print("УМНАЯ КОМАНДНАЯ ОБОЛОЧКА \"РУСИЧ\" АО \"В. Т. СОФТ\"")
 sleep(randint(1,3)/2.5)
