@@ -1,7 +1,9 @@
+#!/usr/bin/env python3
 from markovchain import JsonStorage
 from markovchain.text import MarkovText, ReplyMode
 from random import randint
 from time import sleep
+from pathlib import Path
 import time
 import datetime
 import urllib.request
@@ -76,7 +78,6 @@ print(f"РЕЖИМ ЛОКАЛИЗАЦИИ [{ANSI_COLOR_GREEN}ВКЛЮЧЕНО{AN
 markov.from_file(os.path.dirname(os.path.realpath(__file__)) + "/markov.json")
 print("Напечатайте ИНТЕРАКТИВНЫЙ-СПРАВОЧНИК дабы перейти в режим получения справочной информации про команды ДЖНЮ/Линюкс")
 print("Получаю актуальную информацию о курсах валют...")
-
 date_CBR = time.time()
 byn="0"
 kit="0"
@@ -140,12 +141,18 @@ while True:
     #print("Примечание - переведенная строка: " + rplt)
     argv = parse(rplt)
     if argv[0] == "cd":
-        print(f"{ANSI_COLOR_RED}КОМАНДА ЦД - ПЛОД АМЕРИКАНСКОГО ИМПЕРИАЛИЗМА, ИСПОЛЬЗУЙТЕ КОМАНДУ СМЕНИТЬ-ТЕКУЩУЮ-ДИРЕКТОРИЮ{ANSI_COLOR_RESET}")
+        print(f"{ANSI_COLOR_RED}КОМАНДА ЦД - ПЛОД АМЕРИКАНСКОГО ИМПЕРИАЛИЗМА, ИСПОЛЬЗУЙТЕ КОМАНДУ \"стд\"{ANSI_COLOR_RESET}")
         continue
 
-    if argv[0] == localize_RU_to_EN("СМЕНИТЬ-ТЕКУЩУЮ-ДИРЕКТОРИЮ"):
+    if argv[0] == localize_RU_to_EN("стд"):
         try:
-            os.chdir(argv[1])
+            if '/' == argv[1][0]:
+                os.chdir(argv[1])
+            elif '..' in argv[1]:
+                path = Path(os.getcwd())
+                os.chdir(path.parent)
+            else:
+                os.chdir(os.getcwd() + "/" + argv[1])
         except:
             print(f"{ANSI_COLOR_RED}УКАЗАННАЯ ВАМИ ДИРЕКТОРИЯ НЕ ЭКЗИСТЕНЦИРУЕТ НА ВАШЕМ ЗАПОМИНАЮЩЕМ УСТРОЙСТВЕ{ANSI_COLOR_RESET}")
         continue
