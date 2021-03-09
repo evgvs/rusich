@@ -130,59 +130,61 @@ def fetchval(date_CBR):
 
 markov.save('markov.json')
 while True:
-    fetchval(date_CBR)
-
-    print(f"ТЕКУЩЕЕ МЕСТОПОЛОЖЕНИЕ: {ANSI_COLOR_YELLOW}" + localize_EN_to_RU(os.getcwd()) + 
-    f"{ANSI_COLOR_RESET} | ОПЕРАТИВНОЙ ПАМЯТИ ИСПОЛЬЗОВАНО: " + str(psutil.virtual_memory().percent) + "%" + 
-    "\nГрошы братняга народа: " + byn + " Российских Рублей " + 
-    "| 兄弟人民的货币: " + kit + " Российских Рублей" + 
-    f"\nГосдолг США: " + str(calculateDebt()) + f" долларов" 
-    "\nРУСИЧ =>> ", end="")
-    rplt = input()
-    argv = parse(rplt)
-    if argv[0] == "cd":
-        print(f"{ANSI_COLOR_RED}КОМАНДА ЦД - ПЛОД АМЕРИКАНСКОГО ИМПЕРИАЛИЗМА, ИСПОЛЬЗУЙТЕ КОМАНДУ \"стд\"{ANSI_COLOR_RESET}")
-        continue
-
-    if argv[0] == localize_RU_to_EN("стд"):
-        try:
-            if '/' == argv[1][0]:
-                os.chdir(argv[1])
-            elif '..' in argv[1]:
-                path = Path(os.getcwd())
-                os.chdir(path.parent)
-            else:
-                os.chdir(os.getcwd() + "/" + argv[1])
-        except:
-            print(f"{ANSI_COLOR_RED}УКАЗАННАЯ ВАМИ ДИРЕКТОРИЯ НЕ ЭКЗИСТЕНЦИРУЕТ НА ВАШЕМ ЗАПОМИНАЮЩЕМ УСТРОЙСТВЕ{ANSI_COLOR_RESET}")
-        continue
-
-    if argv[0] == localize_RU_to_EN("ИНТЕРАКТИВНЫЙ-СПРАВОЧНИК"):
-        print(f"{ANSI_COLOR_YELLOW}Вызываю справочную службу села Бухалово, Ярославская область...{ANSI_COLOR_RESET}")
-        sleep(randint(4,16)|8)
-        print(f"{ANSI_COLOR_GREEN}Село Бухалово на связи. Напечатайте 'СПАСИБО, МУДРЕЦ, ПРОЩАЙ!' для отключения.{ANSI_COLOR_RESET}")
-        while True:
-            print(f"РУСИЧ {ANSI_COLOR_GREEN}СПРАШИВАЕТ У МУДРЕЦА{ANSI_COLOR_RESET} =>? ", end="")
-            rplt = input()
-            if rplt == "'СПАСИБО, МУДРЕЦ, ПРОЩАЙ!'":
-                print(f"{ANSI_COLOR_RED}БЕЗ КАВЫЧЕК БЛЯТЬ{ANSI_COLOR_RESET}")
-            elif rplt == "СПАСИБО, МУДРЕЦ, ПРОЩАЙ!":
-                print(f"{ANSI_COLOR_YELLOW}Связь разорвана.{ANSI_COLOR_RESET}")
-                break
-            else:
-                print(markov(max_length=randint(10, 30), reply_to=rplt, reply_mode=ReplyMode))
-        continue
-
-
     try:
-        out = subprocess.check_output(argv).decode("utf-8")
-        ruout = ""
-        for line in out.split("\n"):
-            ruout += localize_EN_to_RU(line) + "\n"
-        ruout = ruout[:-2]
-        print(ruout)
-    except FileNotFoundError:
-        print(f"{ANSI_COLOR_RED}КОМАНДА НЕ ЭКЗИСТЕНЦИРУЕТ НА ВАШЕМ ЗАПОМИНАЮЩЕМ УСТРОЙСТВЕ{ANSI_COLOR_RESET}")
-    except:
-        print(f"{ANSI_COLOR_RED}ВО ВРЕМЯ ЭКЗЕКУЦИИ ПРОГРАММЫ ПРОИЗОШЛА КРИТИЧЕСКАЯ ОШИБКА{ANSI_COLOR_RESET}")
-    
+        fetchval(date_CBR)
+
+        print(f"ТЕКУЩЕЕ МЕСТОПОЛОЖЕНИЕ: {ANSI_COLOR_YELLOW}" + localize_EN_to_RU(os.getcwd()) + 
+        f"{ANSI_COLOR_RESET} | ОПЕРАТИВНОЙ ПАМЯТИ ИСПОЛЬЗОВАНО: " + str(psutil.virtual_memory().percent) + "%" + 
+        "\nГрошы братняга народа: " + byn + " Российских Рублей " + 
+        "| 兄弟人民的货币: " + kit + " Российских Рублей" + 
+        f"\nГосдолг США: " + str(calculateDebt()) + f" долларов" 
+        "\nРУСИЧ =>> ", end="")
+        rplt = input()
+        argv = parse(rplt)
+        if argv[0] == "cd":
+            print(f"{ANSI_COLOR_RED}КОМАНДА ЦД - ПЛОД АМЕРИКАНСКОГО ИМПЕРИАЛИЗМА, ИСПОЛЬЗУЙТЕ КОМАНДУ \"стд\"{ANSI_COLOR_RESET}")
+            continue
+
+        if argv[0] == localize_RU_to_EN("стд"):
+            try:
+                if '/' == argv[1][0]:
+                    os.chdir(argv[1])
+                elif '..' in argv[1]:
+                    path = Path(os.getcwd())
+                    os.chdir(path.parent)
+                else:
+                    os.chdir(os.getcwd() + "/" + argv[1])
+            except:
+                print(f"{ANSI_COLOR_RED}УКАЗАННАЯ ВАМИ ДИРЕКТОРИЯ НЕ ЭКЗИСТЕНЦИРУЕТ НА ВАШЕМ ЗАПОМИНАЮЩЕМ УСТРОЙСТВЕ{ANSI_COLOR_RESET}")
+            continue
+
+        if argv[0] == localize_RU_to_EN("ИНТЕРАКТИВНЫЙ-СПРАВОЧНИК"):
+            print(f"{ANSI_COLOR_YELLOW}Вызываю справочную службу села Бухалово, Ярославская область...{ANSI_COLOR_RESET}")
+            sleep(randint(4,16)|8)
+            print(f"{ANSI_COLOR_GREEN}Село Бухалово на связи. Напечатайте 'СПАСИБО, МУДРЕЦ, ПРОЩАЙ!' для отключения.{ANSI_COLOR_RESET}")
+            while True:
+                print(f"РУСИЧ {ANSI_COLOR_GREEN}СПРАШИВАЕТ У МУДРЕЦА{ANSI_COLOR_RESET} =>? ", end="")
+                rplt = input()
+                if rplt == "'СПАСИБО, МУДРЕЦ, ПРОЩАЙ!'":
+                    print(f"{ANSI_COLOR_RED}БЕЗ КАВЫЧЕК БЛЯТЬ{ANSI_COLOR_RESET}")
+                elif rplt == "СПАСИБО, МУДРЕЦ, ПРОЩАЙ!":
+                    print(f"{ANSI_COLOR_YELLOW}Связь разорвана.{ANSI_COLOR_RESET}")
+                    break
+                else:
+                    print(markov(max_length=randint(10, 30), reply_to=rplt, reply_mode=ReplyMode))
+            continue
+
+
+        try:
+            out = subprocess.check_output(argv).decode("utf-8")
+            ruout = ""
+            for line in out.split("\n"):
+                ruout += localize_EN_to_RU(line) + "\n"
+            ruout = ruout[:-2]
+            print(ruout)
+        except FileNotFoundError:
+            print(f"{ANSI_COLOR_RED}КОМАНДА НЕ ЭКЗИСТЕНЦИРУЕТ НА ВАШЕМ ЗАПОМИНАЮЩЕМ УСТРОЙСТВЕ{ANSI_COLOR_RESET}")
+        except:
+            print(f"{ANSI_COLOR_RED}ВО ВРЕМЯ ЭКЗЕКУЦИИ ПРОГРАММЫ ПРОИЗОШЛА КРИТИЧЕСКАЯ ОШИБКА{ANSI_COLOR_RESET}")
+    except Exception as ex:
+        print(f"{ANSI_COLOR_RED}ПРОИЗОШЛА ФАТАЛЬНАЯ ОШИБКА, ДЛЯ КОТОРОЙ НЕ СУЩЕСТВУЕТ ПОВЕДЕНИЙ СТАБИЛИЗАЦИИ: {ex}{ANSI_COLOR_RESET}")
