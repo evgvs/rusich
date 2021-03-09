@@ -92,17 +92,16 @@ except:
     kit="0"
 
 def fetchval(date_CBR):
-    try:
-        contents = urllib.request.urlopen("http://www.cbr.ru/scripts/XML_daily.asp?", timeout=6).read()
-        tree = ET.fromstring(contents)
-        byn=tree[4][4].text
-        kit=tree[16][4].text
-    except:
-        byn="0"
-        kit="0"
+    if time.time() - date_CBR > 1000:
+        try:
+            contents = urllib.request.urlopen("http://www.cbr.ru/scripts/XML_daily.asp?", timeout=6).read()
+            tree = ET.fromstring(contents)
+            byn=tree[4][4].text
+            kit=tree[16][4].text
+        except:
+            byn="0"
+            kit="0"
 
-        date_CBR = time.time()
-    else:
         date_CBR = time.time()
 
 
