@@ -189,4 +189,4 @@ while True:
         except:
             print(f"{ANSI_COLOR_RED}ВО ВРЕМЯ ЭКЗЕКУЦИИ ПРОГРАММЫ ПРОИЗОШЛА КРИТИЧЕСКАЯ ОШИБКА{ANSI_COLOR_RESET}")
     except Exception as ex:
-        print(f"{ANSI_COLOR_RED}ПРОИЗОШЛА ФАТАЛЬНАЯ ОШИБКА, ДЛЯ КОТОРОЙ НЕ СУЩЕСТВУЕТ ПОВЕДЕНИЙ СТАБИЛИЗАЦИИ: {ex}{ANSI_COLOR_RESET}")
+        print(f"{ANSI_COLOR_RED}ПРОИЗОШЛА ФАТАЛЬНАЯ ОШИБКА, ДЛЯ КОТОРОЙ НЕ СУЩЕСТВУЕТ ПОВЕДЕНИЙ СТАБИЛИЗАЦИИ: {localize_EN_to_RU(repr(ex))}{ANSI_COLOR_RESET}")
