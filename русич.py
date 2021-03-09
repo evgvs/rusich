@@ -160,7 +160,7 @@ while True:
 
         if argv[0] == localize_RU_to_EN("ИНТЕРАКТИВНЫЙ-СПРАВОЧНИК"):
             print(f"{ANSI_COLOR_YELLOW}Вызываю справочную службу села Бухалово, Ярославская область...{ANSI_COLOR_RESET}")
-            sleep(randint(4,16)|12)
+            sleep(randint(4,16)/12)
             print(f"{ANSI_COLOR_GREEN}Село Бухалово на связи. Напечатайте 'СПАСИБО, МУДРЕЦ, ПРОЩАЙ!' для отключения.{ANSI_COLOR_RESET}")
             while True:
                 print(f"РУСИЧ {ANSI_COLOR_GREEN}СПРАШИВАЕТ У МУДРЕЦА{ANSI_COLOR_RESET} =>? ", end="")
