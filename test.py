@@ -57,7 +57,7 @@ def calculateDebt():
     secs = today - togda
     curdeb=(secs*perSecondDebt)+baseDebt
 
-    return curdeb
+    return int(curdeb)
 
 
 
@@ -73,11 +73,9 @@ sleep(randint(4,9)/4.1)
 print(f"{ANSI_COLOR_GREEN}Успешно!{ANSI_COLOR_RESET}")
 print("Коммандный интерпретатор \"РУСИЧ\" в ипостаси \"РАБОЧАЯ ЭЛЕКТРОННО-ВЫЧИСЛИТЕЛЬНАЯ СТАНЦИЯ\" не поддерживает некоторые возможности. В случае появления затруднений в его работе, обратитесь к системному администратору предприятия.")
 print(f"РЕЖИМ ЛОКАЛИЗАЦИИ [{ANSI_COLOR_GREEN}ВКЛЮЧЕНО{ANSI_COLOR_RESET}]")
-
-print("Напечатайте ИНТЕРАКТИВНЫЙ-СПРАВОЧНИК дабы перейти в режим получения справочной информации про команды ЖНЮ/Линюкс")
+markov.from_file(os.path.dirname(os.path.realpath(__file__)) + "/markov.json")
+print("Напечатайте ИНТЕРАКТИВНЫЙ-СПРАВОЧНИК дабы перейти в режим получения справочной информации про команды ДЖНЮ/Линюкс")
 print("Получаю актуальную информацию о курсах валют...")
-with open('content') as fp:
-    markov.data(fp.read())
 
 date_CBR = time.time()
 byn="0"
@@ -90,6 +88,28 @@ try:
 except:
     byn="0"
     kit="0"
+
+def parse(inputstr):
+    out = []
+    buf = ""
+    inbr = False
+    for letter in inputstr:
+        if letter == " " and not inbr:
+            out.append(buf)
+            buf = ""
+        elif letter == "'" and not inbr:
+            inbr = True
+        elif letter == "'" and inbr:
+            inbr = False
+            out.append(buf)
+            buf = ""
+        else:
+            buf = buf + letter
+    out.append(buf)
+    for elem in out:
+        if elem == "":
+            out.remove(elem)    
+    return out
 
 def fetchval(date_CBR):
     if time.time() - date_CBR > 1000:
@@ -118,7 +138,7 @@ while True:
     rplt = localize_RU_to_EN(input())
     
     #print("Примечание - переведенная строка: " + rplt)
-    argv = rplt.split(" ")
+    argv = parse(rplt)
     if argv[0] == "cd":
         print(f"{ANSI_COLOR_RED}КОМАНДА ЦД - ПЛОД АМЕРИКАНСКОГО ИМПЕРИАЛИЗМА, ИСПОЛЬЗУЙТЕ КОМАНДУ СМЕНИТЬ-ТЕКУЩУЮ-ДИРЕКТОРИЮ{ANSI_COLOR_RESET}")
         continue
@@ -132,7 +152,7 @@ while True:
 
     if argv[0] == localize_RU_to_EN("ИНТЕРАКТИВНЫЙ-СПРАВОЧНИК"):
         print(f"{ANSI_COLOR_YELLOW}Вызываю справочную службу села Бухалово, Ярославская область...{ANSI_COLOR_RESET}")
-        sleep(randint(4,16)|4)
+        sleep(randint(4,16)|8)
         print(f"{ANSI_COLOR_GREEN}Село Бухалово на связи. Напечатайте 'СПАСИБО, МУДРЕЦ, ПРОЩАЙ!' для отключения.{ANSI_COLOR_RESET}")
         while True:
             print(f"РУСИЧ {ANSI_COLOR_GREEN}СПРАШИВАЕТ У МУДРЕЦА{ANSI_COLOR_RESET} =>? ", end="")
