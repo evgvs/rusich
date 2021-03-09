@@ -29,3 +29,5 @@ git clone https://gitlab.com/vtsoft/rysich
 cd rysich
 ./install.sh
 ```
+
+Интерпретатор будет установлен в `/usr/local/bin/русич`
