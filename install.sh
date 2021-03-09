@@ -1,3 +1,4 @@
+#!/usr/bin/env sh
 sudo mkdir -p /usr/local/bin
 sudo rm /usr/local/bin/русич
 sudo cp ./русич.py /usr/local/bin/русич
