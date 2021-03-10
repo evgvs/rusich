@@ -142,7 +142,15 @@ while True:
         f"\nГосдолг США: " + str(calculateDebt()) + f" долларов" 
         "\nРУСИЧ =>> ", end="")
         rplt = input()
+
+        if rplt.split(" ")[0] == "лок":
+            print(localize_RU_to_EN(rplt).replace("lok ", ""))
+            continue   
+
         argv = parse(rplt)
+
+        
+
         if argv[0] == "cd":
             print(f"{ANSI_COLOR_RED}КОМАНДА ЦД - ПЛОД АМЕРИКАНСКОГО ИМПЕРИАЛИЗМА, ИСПОЛЬЗУЙТЕ КОМАНДУ \"стд\"{ANSI_COLOR_RESET}")
             continue
@@ -175,7 +183,8 @@ while True:
                 else:
                     print(markov(max_length=randint(10, 30), reply_to=rplt, reply_mode=ReplyMode))
             continue
-
+        
+        
 
         try:
             out = subprocess.check_output(argv).decode("utf-8")
