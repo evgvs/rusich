@@ -139,8 +139,6 @@ def fetchval(date_CBR):
 
         date_CBR = time.time()
 
-
-markov.save('markov.json')
 while True:
     try:
         fetchval(date_CBR)
