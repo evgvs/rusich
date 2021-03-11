@@ -13,7 +13,7 @@ import os
 import psutil
 import subprocess
 version = '1.4.8.7'
-
+import sys
 ANSI_COLOR_RED      = "\x1b[31m"
 ANSI_COLOR_GREEN    = "\x1b[32m"
 ANSI_COLOR_YELLOW   = "\x1b[33m"
@@ -63,17 +63,25 @@ def calculateDebt():
 
     return int(curdeb)
 
+doleep = True
+try:
+    if sys.argv[1] == "под_спидами":
+        doleep = False
+except:
+    pass
 
-
+def sleepsex(tme):
+    if doleep:
+        sleep(tme)
 
 os.system("clear")
 
 print("УМНАЯ КОМАНДНАЯ ОБОЛОЧКА \"РУСИЧ\" АО \"В. Т. СОФТ\"")
-sleep(randint(1,3)/2.9)
+sleepsex(randint(1,3)/2.9)
 print(f"Версия{ANSI_COLOR_GREEN} {version} {ANSI_COLOR_RESET}является крайней, спасибо за своевременную установку обновлений лицензионного программного обеспечения АО \"В. Т. СОФТ\" - официального партнера Фирмы \"1C\"")
-sleep(randint(1,3)/3.9)
+sleepsex(randint(1,3)/3.9)
 print("Начинаю инициализацию 1С:Предприятие 8 для оболочки коммандного интерпретатора \"РУСИЧ\"...")
-sleep(randint(4,9)/4.7)
+sleepsex(randint(4,9)/4.7)
 print(f"{ANSI_COLOR_GREEN}Успешно!{ANSI_COLOR_RESET}")
 print("Коммандный интерпретатор \"РУСИЧ\" в ипостаси \"РАБОЧАЯ ЭЛЕКТРОННО-ВЫЧИСЛИТЕЛЬНАЯ СТАНЦИЯ\" не поддерживает некоторые возможности. В случае появления затруднений в его работе, обратитесь к системному администратору предприятия.")
 print(f"РЕЖИМ ЛОКАЛИЗАЦИИ [{ANSI_COLOR_GREEN}ВКЛЮЧЕНО{ANSI_COLOR_RESET}]")
@@ -86,6 +94,7 @@ date_CBR = time.time()
 byn="0"
 kit="0"
 try:
+    assert doleep == True
     contents = urllib.request.urlopen("http://www.cbr.ru/scripts/XML_daily.asp?", timeout=6).read()
     tree = ET.fromstring(contents)
     byn=tree[4][4].text
@@ -119,6 +128,7 @@ def parse(inputstr):
 def fetchval(date_CBR):
     if time.time() - date_CBR > 1000:
         try:
+            assert doleep == True
             contents = urllib.request.urlopen("http://www.cbr.ru/scripts/XML_daily.asp?", timeout=6).read()
             tree = ET.fromstring(contents)
             byn=tree[4][4].text
@@ -170,7 +180,7 @@ while True:
 
         if argv[0] == localize_RU_to_EN("ИНТЕРАКТИВНЫЙ-СПРАВОЧНИК"):
             print(f"{ANSI_COLOR_YELLOW}Вызываю справочную службу села Бухалово, Ярославская область...{ANSI_COLOR_RESET}")
-            sleep(randint(4,16)/12)
+            sleepsex(randint(4,16)/12)
             print(f"{ANSI_COLOR_GREEN}Село Бухалово на связи. Напечатайте 'СПАСИБО, МУДРЕЦ, ПРОЩАЙ!' для отключения.{ANSI_COLOR_RESET}")
             while True:
                 print(f"РУСИЧ {ANSI_COLOR_GREEN}СПРАШИВАЕТ У МУДРЕЦА{ANSI_COLOR_RESET} =>? ", end="")
