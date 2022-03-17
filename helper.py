@@ -11,4 +11,8 @@ def help(request, markov, normalhelp):
             answ += line + "\n"
     if answ != "":
         return answ
-    return markov(max_length=randint(10, 130), reply_to=request, reply_mode=ReplyMode)
+    else:
+        m = markov(max_length=randint(10, 130), reply_to=request, reply_mode=ReplyMode.END)
+        if (len(m) < len(request) + 5):
+            return markov(max_length=randint(10, 130))
+        return m

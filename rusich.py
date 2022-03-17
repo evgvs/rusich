@@ -13,7 +13,7 @@ import subprocess
 from markovchain import JsonStorage
 from markovchain.text import MarkovText, ReplyMode
 import loading
-version = '1.4.8.8'
+version = '1.4.8.7'
 import sys
 import localizer
 import helper
@@ -21,7 +21,7 @@ import warnings
 import getpass
 import glob
 
-engine = "vtsoft"
+
 from pygments.lexers import BashLexer
 from prompt_toolkit.shortcuts import prompt
 from prompt_toolkit.lexers import PygmentsLexer
@@ -30,9 +30,9 @@ from prompt_toolkit.history import FileHistory
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from prompt_toolkit.completion import WordCompleter
 
-f = open(os.path.expanduser('~') + '/.rysich_history', "w+")
+f = open(os.path.expanduser('~') + '/.rusich_history', "w+")
 f.write("")
-promptsession = PromptSession(history=FileHistory((os.path.expanduser('~') + '/.rysich_history')))
+promptsession = PromptSession(history=FileHistory((os.path.expanduser('~') + '/.rusich_history')))
 
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -86,7 +86,7 @@ splash(1)
 os.system('clear')
 
 print(f"{ANSI_COLOR_BOLD}УМНАЯ КОМАНДНАЯ ОБОЛОЧКА \"РУСИЧ\" АО \"В. Т. СОФТ\"{ANSI_COLOR_RESET}")
-print("Инициализация 1С:Предприятие 9 для оболочки коммандного интерпретатора \"РУСИЧ\"...")
+print("Инициализация 1ЭСС:Предприятие 9 для оболочки коммандного интерпретатора \"РУСИЧ\"...")
 splash(4)
 os.system('clear')
 
@@ -124,7 +124,7 @@ splash(3)
 os.system('clear')
 
 
-fls2 = ["ЗАДАТЬ-ДВИГАТЕЛЬ-ПЕРЕВОДА", "ИНТЕРАКТИВНЫЙ-СПРАВОЧНИК"]
+fls2 = ["ЗАДАТЬ-ДВИГАТЕЛЬ-ПЕРЕВОДА-ВЫВОДА", "ЗАДАТЬ-ДВИГАТЕЛЬ-ПЕРЕВОДА-ВВОДА", "ИНТЕРАКТИВНЫЙ-СПРАВОЧНИК"]
 for e in os.environ["PATH"].split(":"):
     fls1 = glob.glob(e + "/*")
     for fi in fls1:
@@ -136,7 +136,11 @@ if not doleep:
 
 print(f"{ANSI_COLOR_BOLD}УМНАЯ КОМАНДНАЯ ОБОЛОЧКА \"РУСИЧ\" АО \"В. Т. СОФТ\" ВЕРСИЯ {ANSI_COLOR_GREEN}{version}{ANSI_COLOR_RESET}")
 splash(1)
-print(f"РЕЖИМ ЛОКАЛИЗАЦИИ [{ANSI_COLOR_GREEN}ГООГЛЕ{ANSI_COLOR_RESET}]")
+print(f"ЛОКАЛИЗАЦИЯ ВКЛЮЧЕНА:")
+in_engine = "втсофт"
+out_engine = "втсофт"
+print(f"ВВОДА [{ANSI_COLOR_GREEN}втсофт{ANSI_COLOR_RESET}]")
+print(f"ВЫВОДА [{ANSI_COLOR_GREEN}втсофт{ANSI_COLOR_RESET}]")
 splash(1)
 print("Напечатайте ИНТЕРАКТИВНЫЙ-СПРАВОЧНИК дабы перейти в режим получения справочной информации про команды ДЖНЮ/Линюкс")
 splash(1)
@@ -190,7 +194,6 @@ while True:
     try:
         fetchval(date_CBR)
 
-
         print(f"ТЕКУЩЕЕ МЕСТОПОЛОЖЕНИЕ: {ANSI_COLOR_YELLOW}" + localizer.localize_EN_to_RU(os.getcwd()) + 
         f"{ANSI_COLOR_RESET} | ОПЕРАТИВНОЙ ПАМЯТИ ИСПОЛЬЗОВАНО: " + str(psutil.virtual_memory().percent) + "%")
         if byn != "ОШИБКА" and kit != "ОШИБКА":
@@ -199,33 +202,46 @@ while True:
 
         print("Госдолг США: " + str(calculateDebt()) + f" долларов")
 
-
-
-
-
-        rplt=promptsession.prompt("[" + localizer.localize_EN_to_RU(engine) + "] РУСИЧ (" + localizer.localize_EN_to_RU(getpass.getuser()) + ") =>> ", lexer=PygmentsLexer(BashLexer), auto_suggest=AutoSuggestFromHistory(), completer=completer) 
-
-
-
-
-
-
+        # АНГЛ <=> РУС [гугле/втсофт]
+        # АНГЛ ==> РУС [гугле/втсофт] 
+        # АНГЛ <== РУС [выключен] 
+        # AНГЛ =X= РУС [выключен]
+        trstr = ""
+        if out_engine != "выключен" and in_engine != "выключен":
+            trstr = "АНГЛ <=> РУС"
+        elif out_engine == "выключен" and in_engine != "выключен":
+            trstr = "АНГЛ <== РУС"
+        elif out_engine != "выключен" and in_engine == "выключен":
+            trstr = "АНГЛ ==> РУС"
+        elif out_engine == "выключен" and in_engine == "выключен":
+            trstr = "АНГЛ =X= РУС"
+        rplt=promptsession.prompt(trstr + " [" + out_engine + "] РУСИЧ (" + localizer.localize_EN_to_RU(getpass.getuser()) + ") =>> ", lexer=PygmentsLexer(BashLexer), auto_suggest=AutoSuggestFromHistory(), completer=completer) 
         argv = parse(rplt)
-        #if argv[0] == localizer.localize_RU_to_EN(""):
-        #print(argv)
-        if argv[0] == localizer.localize_RU_to_EN("ЗАДАТЬ-ДВИГАТЕЛЬ-ПЕРЕВОДА"):
-            if argv[1] == "google":
-                
+
+        if argv[0] == localizer.localize_RU_to_EN("ЗАДАТЬ-ДВИГАТЕЛЬ-ПЕРЕВОДА-ВЫВОДА"):
+            if argv[1] == "гугле" or argv[1] == localizer.localize_RU_to_EN("гугле"):
                 try:
-                    localizer.localize_EN_to_RU("test", "google")
-                    print(f"{ANSI_COLOR_DIM}Двигателем перевода установлен гугле.{ANSI_COLOR_RESET}")
+                    localizer.localize_EN_to_RU("test", "гугле")
+                    print(f"{ANSI_COLOR_DIM}Двигателем перевода установлен переводчик гугле.{ANSI_COLOR_RESET}")
                 except Exception as E:
-                    print(f"{ANSI_COLOR_RED}Двигателем перевода не удалось установить гугле. Учтите, что для работы с Гугле нужен высокоскоростной доступ к широкополосному подключению к глобальной сети \"Интернет\". Ошибка: " + localizer.localize_EN_to_RU(str(E)) + f"{ANSI_COLOR_RESET}")
-                
-                engine = "google"
-            elif argv[1] == "vtsoft":
+                    print(f"{ANSI_COLOR_RED}Двигателем перевода не удалось установить переводчик гугле. Учтите, что для работы с Гугле нужен высокоскоростной доступ к широкополосному подключению к глобальной сети \"Интернет\". Ошибка: " + localizer.localize_EN_to_RU(str(E)) + f"{ANSI_COLOR_RESET}")
+                out_engine = "гугле"
+            elif argv[1] == "втсофт" or argv[1] == localizer.localize_RU_to_EN("втсофт"):
                 print(f"{ANSI_COLOR_DIM}Двигателем перевода установлен переводчик АО В. Т. СОФТ.{ANSI_COLOR_RESET}")
-                engine = "vtsoft"
+                out_engine = "втсофт"
+            elif argv[1] == "выключен" or argv[1] == localizer.localize_RU_to_EN("выключен"):
+                print(f"{ANSI_COLOR_DIM}Двигатель перевода вывода выключен.{ANSI_COLOR_RESET}")
+                out_engine = "выключен"
+            else:
+                print(f"{ANSI_COLOR_RED}УКАЗАННЫЙ ДВИГАТЕЛЬ ПЕРЕВОДА НЕ ЭКЗИСТЕНЦИИРУЕТ В ДАННОМ КОМПЛЕКТЕ ПОСТАВКИ РУСИЧ{ANSI_COLOR_RESET}")
+            continue
+        if argv[0] == localizer.localize_RU_to_EN("ЗАДАТЬ-ДВИГАТЕЛЬ-ПЕРЕВОДА-ВВОДА"):
+            if argv[1] == "втсофт" or argv[1] == localizer.localize_RU_to_EN("втсофт"):
+                print(f"{ANSI_COLOR_DIM}Двигателем перевода ввода установлен переводчик АО В. Т. СОФТ.{ANSI_COLOR_RESET}")
+                in_engine = "гугле"
+            elif argv[1] == "выключен" or argv[1] == localizer.localize_RU_to_EN("выключен"):
+                print(f"{ANSI_COLOR_DIM}Двигатель перевода вывода выключен.{ANSI_COLOR_RESET}")
+                in_engine = "выключен"
             else:
                 print(f"{ANSI_COLOR_RED}УКАЗАННЫЙ ДВИГАТЕЛЬ ПЕРЕВОДА НЕ ЭКЗИСТЕНЦИИРУЕТ В ДАННОМ КОМПЛЕКТЕ ПОСТАВКИ РУСИЧ{ANSI_COLOR_RESET}")
             continue
@@ -241,20 +257,21 @@ while True:
             except:
                 print(f"{ANSI_COLOR_RED}УКАЗАННАЯ ВАМИ ДИРЕКТОРИЯ НЕ ЭКЗИСТЕНЦИРУЕТ НА ВАШЕМ ЗАПОМИНАЮЩЕМ УСТРОЙСТВЕ{ANSI_COLOR_RESET}")
             continue
-
+        if argv[0] == "lok":
+            print(argv)
+            continue
         if argv[0] == localizer.localize_RU_to_EN("ИНТЕРАКТИВНЫЙ-СПРАВОЧНИК"):
             print(f"{ANSI_COLOR_YELLOW}Вызываю справочную службу села Бухалово, Ярославская область...{ANSI_COLOR_RESET}")
             splash(randint(3,7))
             print(f"{ANSI_COLOR_GREEN}Село Бухалово на связи. Напечатайте 'СПАСИБО, МУДРЕЦ, ПРОЩАЙ!' для отключения.{ANSI_COLOR_RESET}")
             while True:
-                rplt = prompt(f"РУСИЧ {ANSI_COLOR_GREEN}СПРАШИВАЕТ У МУДРЕЦА{ANSI_COLOR_RESET} =>? ")
+                rplt = prompt(f"РУСИЧ СПРАШИВАЕТ У МУДРЕЦА =>? ")
                 if rplt == "'СПАСИБО, МУДРЕЦ, ПРОЩАЙ!'":
                     print(f"{ANSI_COLOR_RED}БЕЗ КАВЫЧЕК БЛЯТЬ{ANSI_COLOR_RESET}")
                 elif rplt == "СПАСИБО, МУДРЕЦ, ПРОЩАЙ!":
                     print(f"{ANSI_COLOR_YELLOW}Связь разорвана.{ANSI_COLOR_RESET}")
                     break
                 else:
-                    splash(randint(1,3))
                     print(helper.help(rplt, markov, normalhelp))
             continue
         
@@ -262,7 +279,7 @@ while True:
         
         try:
             process = subprocess.Popen(argv, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-            if engine == "google":
+            if out_engine == "гугле":
                 buf = ""
                 for c in iter(lambda: process.stdout.read(1), b''): 
                     try:
@@ -270,19 +287,24 @@ while True:
                         if a != "\0" and a != "\n" and a != "\r" and a != "\b" and a != "\a":
                             buf += str(c.decode("utf-8"))
                         if str(c.decode("utf-8")) == '\n':
-                            print(localizer.localize_EN_to_RU(str(buf), engine), end="\n")
+                            print(localizer.localize_EN_to_RU(str(buf), out_engine), end="\n")
                             buf = ""
                     except:
                         pass
             else:
                 for c in iter(lambda: process.stdout.read(1), b''): 
-                    print(localizer.localize_EN_to_RU(str(c.decode("utf-8")), engine), end="")
+                    print(localizer.localize_EN_to_RU(str(c.decode("utf-8")), out_engine), end="")
             
         except FileNotFoundError:
             print(f"{ANSI_COLOR_RED}{ANSI_COLOR_RED}КОМАНДА НЕ ЭКЗИСТЕНЦИРУЕТ НА ВАШЕМ ЗАПОМИНАЮЩЕМ УСТРОЙСТВЕ{ANSI_COLOR_RESET}")
         except Exception as E:
             print(f"{ANSI_COLOR_RED}{ANSI_COLOR_RED}ВО ВРЕМЯ ЭКЗЕКУЦИИ ПРОГРАММЫ ПРОИЗОШЛА КРИТИЧЕСКАЯ ОШИБКА{ANSI_COLOR_RESET}")
             print(E)
+    except KeyboardInterrupt:
+        print(f"{ANSI_COLOR_DIM}Князь+С{ANSI_COLOR_RESET}")
+    except EOFError:
+        print(f"{ANSI_COLOR_GREEN}Князь+В, Русич завершает работу.{ANSI_COLOR_RESET}")
+        exit(0)
     except Exception as ex:
         print(f"{ANSI_COLOR_RED}{ANSI_COLOR_BOLD}ПРОИЗОШЛА ФАТАЛЬНАЯ ОШИБКА, ДЛЯ КОТОРОЙ НЕ СУЩЕСТВУЕТ ПОВЕДЕНИЙ СТАБИЛИЗАЦИИ: {localizer.localize_EN_to_RU(repr(ex))}{ANSI_COLOR_RESET}")
 
