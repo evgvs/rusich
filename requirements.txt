@@ -1,0 +1,5 @@
+googletrans==4.0.0rc1
+markovchain
+psutil
+prompt_toolkit
+Pygments
